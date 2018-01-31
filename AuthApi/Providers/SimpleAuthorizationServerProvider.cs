@@ -21,31 +21,16 @@ namespace AuthApi.Providers
 
                 if (user == null)
                 {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    context.SetError("access_denied", "Usuário e/ou senha inválido(s)");
                     return;
                 }
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim("sub", context.UserName));
-            identity.AddClaim(new Claim("role", "user"));
+            identity.AddClaim(new Claim("role", "atendimento_automatico"));
 
             context.Validated(identity);
-        }
-
-        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
-        {
-            return base.TokenEndpoint(context);
-        }
-
-        public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
-        {
-            return base.ValidateTokenRequest(context);
-        }
-
-        public override Task AuthorizeEndpoint(OAuthAuthorizeEndpointContext context)
-        {
-            return base.AuthorizeEndpoint(context);
         }
     }
 }

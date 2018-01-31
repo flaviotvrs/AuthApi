@@ -24,20 +24,14 @@ namespace AuthApi
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
+                TokenEndpointPath = new PathString("/api/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(10),
                 Provider = new SimpleAuthorizationServerProvider()
             };
 
-            OAuthBearerAuthenticationOptions OAuthBearerOptions = new OAuthBearerAuthenticationOptions()
-            {
-                Provider = new CustomOAuthBearerAuthenticationProvider(),
-                AccessTokenProvider = new CustomAuthenticationTokenProvider()
-            };
-
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }
