@@ -25,13 +25,19 @@ namespace AuthApi
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(10),
                 Provider = new SimpleAuthorizationServerProvider()
+            };
+
+            OAuthBearerAuthenticationOptions OAuthBearerOptions = new OAuthBearerAuthenticationOptions()
+            {
+                Provider = new CustomOAuthBearerAuthenticationProvider(),
+                AccessTokenProvider = new CustomAuthenticationTokenProvider()
             };
 
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
         }
     }
 }

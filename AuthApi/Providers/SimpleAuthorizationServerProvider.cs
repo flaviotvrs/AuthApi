@@ -31,8 +31,21 @@ namespace AuthApi.Providers
             identity.AddClaim(new Claim("role", "user"));
 
             context.Validated(identity);
+        }
 
-            return;
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            return base.TokenEndpoint(context);
+        }
+
+        public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
+        {
+            return base.ValidateTokenRequest(context);
+        }
+
+        public override Task AuthorizeEndpoint(OAuthAuthorizeEndpointContext context)
+        {
+            return base.AuthorizeEndpoint(context);
         }
     }
 }
